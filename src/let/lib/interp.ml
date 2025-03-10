@@ -1,7 +1,11 @@
+(*
+Author: Vinci Li
+Pledge: I pledge my honor that I have abided by the Stevens Honor System.
+*)
 open Parser_plaf.Ast
 open Parser_plaf.Parser
 open Ds
-    
+
 (** [eval_expr e] evaluates expression [e] *)
 let rec eval_expr : expr -> exp_val ea_result =
   fun e ->
@@ -54,8 +58,28 @@ let rec eval_expr : expr -> exp_val ea_result =
     string_of_env >>= fun str ->
     print_endline str; 
     error "Debug called"
-  | _ -> failwith "Not implemented yet!"
+  | Record fields ->
+    let field_names = List.map fst fields in
+    let unique_field_names = List.sort_uniq String.compare field_names in
+    if List.length field_names <> List.length unique_field_names then
+      error "Record: duplicate fields"
+    else
+      let rec eval_fields acc = function
+        | [] -> return (RecordVal (List.rev acc))
+        | (key, (_mutable_flag, value)) :: rest ->
+            eval_expr value >>= fun v ->
+            eval_fields ((key, TupleVal [BoolVal false; v]) :: acc) rest
+      in
+      eval_fields [] fields
 
+  | Proj(e, field) ->
+      eval_expr e >>= record_of_recordVal >>= fun fields ->
+      match List.assoc_opt field fields with
+      | Some (TupleVal [_; v]) -> return v
+      | Some v -> return v
+      | None -> error "Proj: field does not exist"
+    
+  
 (** [eval_prog e] evaluates program [e] *)
 let eval_prog (AProg(_,e)) =
   eval_expr e
@@ -64,6 +88,10 @@ let eval_prog (AProg(_,e)) =
 let interp (e:string) : exp_val result =
   let c = e |> parse |> eval_prog
   in run c
-  
 
-
+(*looks up field*)
+let lookup_field : string -> (string * exp_val) list -> exp_val ea_result = fun id fields ->
+  match List.assoc_opt id fields with
+  | Some (TupleVal [_; v]) -> return v
+  | Some v -> return v
+  | None -> error "Field does not exist!"

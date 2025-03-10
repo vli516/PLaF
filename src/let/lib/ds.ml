@@ -1,17 +1,21 @@
-(* This file defines expressed values and environments *)
+(*
+Author: Vinci Li
+Pledge: I pledge my honor that I have abided by the Stevens Honor System.
+*)
 
-(* expressed values and environments are defined mutually recursively *)
-
+type 'a tree = Empty | Node of 'a * 'a tree * 'a tree
 
 type exp_val =
   | NumVal of int
   | BoolVal of bool
   | PairVal of exp_val*exp_val
   | TupleVal of exp_val list
+  | TreeVal of exp_val tree
+  | RecordVal of (string * exp_val) list
+
 type env =
   | EmptyEnv
   | ExtendEnv of string*exp_val*env
-
 
 (* Environment Abstracted Result *)
 
@@ -87,8 +91,6 @@ let rec apply_env : string -> exp_val ea_result = fun id env ->
     then Ok ev
     else apply_env id tail
 
-
-
 (* operations on expressed values *)
 
 let int_of_numVal : exp_val -> int ea_result =  function
@@ -106,13 +108,24 @@ let list_of_tupleVal : exp_val -> (exp_val list)  ea_result =  function
 let pair_of_pairVal : exp_val -> (exp_val*exp_val) ea_result =  function
   |  PairVal(ev1,ev2) -> return (ev1,ev2)
   | _ -> error "Expected a pair!"
-           
+
+(* Helper that convert a tree to a string *)
+(* Converting expressed vals to string *)
 let rec string_of_expval = function
   | NumVal n -> "NumVal " ^ string_of_int n
   | BoolVal b -> "BoolVal " ^ string_of_bool b
-  | PairVal (ev1,ev2) -> "PairVal("^string_of_expval ev1
-                         ^","^ string_of_expval ev2^")"
-  | TupleVal evs -> "TupleVal("^String.concat "," (List.map string_of_expval evs)^")"
+  | PairVal (ev1, ev2) -> "PairVal(" ^ string_of_expval ev1 ^ ", " ^ string_of_expval ev2 ^ ")"
+  | TupleVal evs -> "TupleVal(" ^ String.concat "," (List.map string_of_expval evs) ^ ")"
+  | TreeVal t -> "TreeVal(" ^ string_of_tree t ^ ")"
+  | RecordVal r -> "RecordVal(" ^ String.concat "," (List.map (fun (k, v) -> k ^ ": " ^ string_of_expval v) r) ^ ")"
+
+(* Converting a tree to string *)
+and string_of_tree = function
+  | Empty -> "Empty"
+  | Node (v, l, r) ->
+      "Node(" ^ string_of_expval v ^ ", " ^
+      string_of_tree l ^ ", " ^
+      string_of_tree r ^ ")"
 
 let rec string_of_env' ac = function
   | EmptyEnv ->  "["^String.concat ",\n" ac^"]"
@@ -123,3 +136,19 @@ let string_of_env : string ea_result =
   match env with
   | EmptyEnv -> Ok ">>Environment:\nEmpty"
   | _ -> Ok (">>Environment:\n"^ string_of_env' [] env)
+  
+(* Is value a tree?? *)
+let tree_of_treeVal : exp_val -> exp_val tree ea_result = function
+  | TreeVal t -> return t
+  | _ -> error "Expected a tree!"
+
+(* Is value a record?? *)
+let record_of_recordVal : exp_val -> (string * exp_val) list ea_result = function
+  | RecordVal r -> return r
+  | _ -> error "Expected a record!"
+
+(* Gets a field from a record *)
+let lookup_field : string -> (string * exp_val) list -> exp_val ea_result = fun id fields ->
+  match List.assoc_opt id fields with
+  | Some v -> return v
+  | None -> error "Proj: field does not exist"
