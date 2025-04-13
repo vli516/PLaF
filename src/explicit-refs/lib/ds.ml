@@ -55,7 +55,13 @@ let sequence (cs: ('a ea_result) list) : ('a list) ea_result  =
 let mapM (f:'a -> 'b ea_result) (vs:'a list) : ('b list) ea_result =
    sequence (List.map f vs)
 
-
+(* Helper to zip field declarations with evaluated values ADDEDDDDDD*)
+let rec addIds fs evs =
+  match fs, evs with
+  | [], [] -> []
+  | (id, (is_mutable, _)) :: t1, v :: t2 ->
+      (id, (is_mutable, v)) :: addIds t1 t2
+  | _, _ -> failwith "error: lists have different sizes"
 
 (* Operations on environments *)
 let empty_env : unit -> env ea_result =
@@ -151,7 +157,3 @@ let string_of_env : string ea_result =
   match env with
   | EmptyEnv -> Ok ">>Environment:\nEmpty"
   | _ -> Ok (">>Environment:\n"^ string_of_env' [] env)
-
-
-
-
