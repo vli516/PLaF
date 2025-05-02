@@ -1,0 +1,46 @@
+# dune utop
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /Users/vicniz/.cache/dune/db
+# Workspace root: /Users/vicniz/CS496/PLaF/src/let
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/vicniz/.opam/5.2.1/bin/ocamlc.opt -config > /var/folders/tl/jry_b0gd26x9xxc72fj9hqnr0000gn/T/dune_8fed7e_output
+$ (cd _build/default && /Users/vicniz/.opam/5.2.1/bin/ocamldep.opt -modules -impl lib/ds.ml) > _build/default/lib/.let.objs/let__Ds.impl.d
+$ (cd _build/default && /Users/vicniz/.opam/5.2.1/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -bin-annot-occurrences -I lib/.let.objs/byte -I /Users/vicniz/.opam/5.2.1/lib/menhirLib -I lib/parser_plaf/lib/.parser_plaf.objs/byte -no-alias-deps -opaque -open Let -o lib/.let.objs/byte/let__Ds.cmo -c -impl lib/ds.ml)
+$ (cd _build/default && /Users/vicniz/.opam/5.2.1/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -bin-annot-occurrences -I lib/.let.objs/byte -I /Users/vicniz/.opam/5.2.1/lib/menhirLib -I lib/parser_plaf/lib/.parser_plaf.objs/byte -no-alias-deps -opaque -open Let -o lib/.let.objs/byte/let__Interp.cmo -c -impl lib/interp.ml)
+> File "lib/interp.ml", lines 12-80, characters 2-50:
+> 12 | ..match e with
+> 13 |   | Int(n) ->
+> 14 |     return (NumVal n)
+> 15 |   | Var(id) ->
+> 16 |     apply_env id
+> ...
+> 77 |       match List.assoc_opt field fields with
+> 78 |       | Some (TupleVal [_; v]) -> return v
+> 79 |       | Some v -> return v
+> 80 |       | None -> error "Proj: field does not exist"
+> Warning 8 [partial-match]: this pattern-matching is not exhaustive.
+> Here is an example of a case that is not matched:
+> (Unit|Self|Abs _|Min (_, _)|Sum _|Prod _|Avg _|Maxl _|IsNumber _|
+> Proc (_, _, _)|App (_, _)|Letrec (_, _)|Set (_, _)|NewRef _|DeRef _|
+> SetRef (_, _)|BeginEnd _|Fst _|Snd _|Tuple _|Untuple (_, _, _)|Pair (_, _)|
+> Unpair (_, _, _, _)|EmptyTree _|Node (_, _, _)|CaseT (_, _, _, _, _, _)|
+> SetField (_, _, _)|IsEqual (_, _)|IsGT (_, _)|IsLT (_, _)|Send (_, _, _)|
+> Super (_, _)|NewObject (_, _)|EmptyList _|Cons (_, _)|Hd _|Tl _|IsEmpty _|
+> List _|IsInstanceOf (_, _)|Cast (_, _)|SetExt _|EmptySet _|InsertSet (_, _)|
+> UnionSet (_, _)|IsSubset (_, _)|IsMember (_, _)|Size _|EmptyStack _|
+> PushStack (_, _)|PopStack _|TopStack _|EmptyQueue _|AddQueue (_, _)|
+> RemoveQueue _|TopQueue _|EmptyHtbl (_, _)|InsertHtbl (_, _, _)|
+> LookupHtbl (_, _)|RemoveHtbl (_, _))
+$ (cd _build/default && /Users/vicniz/.opam/5.2.1/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o lib/let.cma lib/.let.objs/byte/let.cmo lib/.let.objs/byte/let__Ds.cmo lib/.let.objs/byte/let__Interp.cmo)
+$ (cd _build/default && /Users/vicniz/.opam/5.2.1/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -bin-annot -bin-annot-occurrences -I lib/.utop/.utop.eobjs/byte -I /Users/vicniz/.opam/5.2.1/lib/bytes -I /Users/vicniz/.opam/5.2.1/lib/findlib -I /Users/vicniz/.opam/5.2.1/lib/lambda-term -I /Users/vicniz/.opam/5.2.1/lib/logs -I /Users/vicniz/.opam/5.2.1/lib/lwt -I /Users/vicniz/.opam/5.2.1/lib/lwt/unix -I /Users/vicniz/.opam/5.2.1/lib/lwt_react -I /Users/vicniz/.opam/5.2.1/lib/menhirLib -I /Users/vicniz/.opam/5.2.1/lib/mew -I /Users/vicniz/.opam/5.2.1/lib/mew_vi -I /Users/vicniz/.opam/5.2.1/lib/ocaml/compiler-libs -I /Users/vicniz/.opam/5.2.1/lib/ocaml/threads -I /Users/vicniz/.opam/5.2.1/lib/ocaml/unix -I /Users/vicniz/.opam/5.2.1/lib/ocplib-endian -I /Users/vicniz/.opam/5.2.1/lib/ocplib-endian/bigstring -I /Users/vicniz/.opam/5.2.1/lib/react -I /Users/vicniz/.opam/5.2.1/lib/result -I /Users/vicniz/.opam/5.2.1/lib/trie -I /Users/vicniz/.opam/5.2.1/lib/uchar -I /Users/vicniz/.opam/5.2.1/lib/utop -I /Users/vicniz/.opam/5.2.1/lib/uucp -I /Users/vicniz/.opam/5.2.1/lib/uuseg -I /Users/vicniz/.opam/5.2.1/lib/uutf -I /Users/vicniz/.opam/5.2.1/lib/xdg -I /Users/vicniz/.opam/5.2.1/lib/zed -I lib/.let.objs/byte -I lib/parser_plaf/lib/.parser_plaf.objs/byte -no-alias-deps -o lib/.utop/.utop.eobjs/byte/dune__exe__Utop.cmo -c -impl lib/.utop/utop.ml-gen)
+$ (cd _build/default && /Users/vicniz/.opam/5.2.1/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -24 -g -o lib/.utop/utop.bc /Users/vicniz/.opam/5.2.1/lib/ocaml/compiler-libs/ocamlcommon.cma /Users/vicniz/.opam/5.2.1/lib/ocaml/compiler-libs/ocamlbytecomp.cma /Users/vicniz/.opam/5.2.1/lib/ocaml/compiler-libs/ocamltoplevel.cma /Users/vicniz/.opam/5.2.1/lib/findlib/findlib.cma /Users/vicniz/.opam/5.2.1/lib/findlib/findlib_top.cma /Users/vicniz/.opam/5.2.1/lib/logs/logs.cma /Users/vicniz/.opam/5.2.1/lib/lwt/lwt.cma /Users/vicniz/.opam/5.2.1/lib/logs/logs_lwt.cma /Users/vicniz/.opam/5.2.1/lib/ocplib-endian/ocplib_endian.cma /Users/vicniz/.opam/5.2.1/lib/ocplib-endian/bigstring/ocplib_endian_bigstring.cma /Users/vicniz/.opam/5.2.1/lib/ocaml/unix/unix.cma /Users/vicniz/.opam/5.2.1/lib/ocaml/threads/threads.cma /Users/vicniz/.opam/5.2.1/lib/lwt/unix/lwt_unix.cma -I /Users/vicniz/.opam/5.2.1/lib/lwt/../stublibs /Users/vicniz/.opam/5.2.1/lib/react/react.cma /Users/vicniz/.opam/5.2.1/lib/lwt_react/lwt_react.cma /Users/vicniz/.opam/5.2.1/lib/result/result.cma /Users/vicniz/.opam/5.2.1/lib/uutf/uutf.cma /Users/vicniz/.opam/5.2.1/lib/uucp/uucp.cma /Users/vicniz/.opam/5.2.1/lib/uuseg/uuseg.cma /Users/vicniz/.opam/5.2.1/lib/zed/zed.cma /Users/vicniz/.opam/5.2.1/lib/trie/trie.cma /Users/vicniz/.opam/5.2.1/lib/mew/mew.cma /Users/vicniz/.opam/5.2.1/lib/mew_vi/mew_vi.cma /Users/vicniz/.opam/5.2.1/lib/lambda-term/lambda_term.cma -I /Users/vicniz/.opam/5.2.1/lib/lambda-term/../stublibs /Users/vicniz/.opam/5.2.1/lib/xdg/xdg.cma -I /Users/vicniz/.opam/5.2.1/lib/xdg/../stublibs /Users/vicniz/.opam/5.2.1/lib/utop/uTop.cma /Users/vicniz/.opam/5.2.1/lib/menhirLib/menhirLib.cma lib/parser_plaf/lib/parser_plaf.cma lib/let.cma lib/.utop/.utop.eobjs/byte/dune__exe__Utop.cmo -linkall -warn-error -31)

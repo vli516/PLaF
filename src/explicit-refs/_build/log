@@ -1,0 +1,16 @@
+# dune utop
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /Users/vicniz/.cache/dune/db
+# Workspace root: /Users/vicniz/CS496/PLaF/src/explicit-refs
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/vicniz/.opam/5.2.1/bin/ocamlc.opt -config > /var/folders/tl/jry_b0gd26x9xxc72fj9hqnr0000gn/T/dune_e5af71_output
